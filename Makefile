@@ -6,7 +6,7 @@
 #    By: minkyeki <minkyeki@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/16 15:31:26 by minkyeki          #+#    #+#              #
-#    Updated: 2022/08/16 17:39:03 by minkyeki         ###   ########.fr        #
+#    Updated: 2022/08/16 23:01:56 by minkyeki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,9 +47,9 @@ GNL_SRC         = get_next_line get_next_line_utils \
 PRINTF_SRC      = ft_printf ft_printf_hex ft_printf_info ft_printf_parse \
 				  ft_printf_spec1 ft_printf_spec2
 
-STRING_SRC      = string_create.c string_modify string_modify2 string_utils
+STRING_SRC      = string_create string_modify string_modify2 string_utils
 
-VECTOR_SRC      = darray_create darray_modify darray_iterate vector
+VECTOR_SRC      = vector_create vector_modify vector_iterate vector
 
 # NOTE : Add to SRC here
 # ------------------------------------------------------ #
@@ -57,7 +57,7 @@ SRC = $(addsuffix .c, $(addprefix $(LIBC_DIR),   $(LIBC_SRC)))        \
 	  $(addsuffix .c, $(addprefix $(GNL_DIR),    $(GNL_SRC)))         \
 	  $(addsuffix .c, $(addprefix $(PRINF_DIR),  $(PRINTF_SRC)))      \
 	  $(addsuffix .c, $(addprefix $(STRING_DIR), $(STRING_SRC)))      \
-	  $(addsuffix .c, $(addprefix $(VECTOR_DIR), $(VECTOR_DIR_SRC)))  \
+	  $(addsuffix .c, $(addprefix $(VECTOR_DIR), $(VECTOR_SRC)))      \
 # ------------------------------------------------------ #
 
 OBJ = $(SRC:c=o)
@@ -80,22 +80,18 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@$(AR) $(NAME) $^
-	@echo "$(BLUE)---------------------------$(DEF_COLOR)"
-	@echo "$(BLUE)| Libft compile finished. |$(DEF_COLOR)"
-	@echo "$(BLUE)---------------------------$(DEF_COLOR)"
+	@echo "$(GREEN)---------------------------$(DEF_COLOR)"
+	@echo "$(GREEN)|                         |$(DEF_COLOR)"
+	@echo "$(GREEN)| Libft compile finished. |$(DEF_COLOR)"
+	@echo "$(GREEN)|                         |$(DEF_COLOR)"
+	@echo "$(GREEN)---------------------------$(DEF_COLOR)"
 
 %.o: %.c
-	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	@$(CC) $(CFLAGS) -I$(INCLUDE) -c $< -o $@
 	@echo "$(GREEN)Compiling... \t$< $(DEF_COLOR)"
 
-$(OBJ_MKDIR):
-	@mkdir -p $(OBJ_DIR)
-
-bonus:
-	@make WITH_BONUS=1
-
 clean:
-	@${RM} -r ${OBJ_DIR}
+	@rm -rf $(OBJ)
 	@echo "$(CYAN)Libft obj files has been deleted.$(DEF_COLOR)"
 
 fclean: clean

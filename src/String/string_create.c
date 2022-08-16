@@ -6,10 +6,11 @@
 /*   By: minkyeki <minkyeki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 17:40:50 by minkyeki          #+#    #+#             */
-/*   Updated: 2022/08/01 00:23:43 by minkyeki         ###   ########.fr       */
+/*   Updated: 2022/08/16 22:22:39 by minkyeki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "string.h"
 
 static void	set_funtion_ptr(t_string *str)

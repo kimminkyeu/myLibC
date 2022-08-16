@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   darray_modify.c                                    :+:      :+:    :+:   */
+/*   vector_modify.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minkyeki <minkyeki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 16:27:38 by minkyeki          #+#    #+#             */
-/*   Updated: 2022/05/01 14:15:46 by minkyeki         ###   ########.fr       */
+/*   Updated: 2022/08/16 22:50:14 by minkyeki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "darray.h"
+#include "vector.h"
 
 static void	ft_memcpy(void *dest, const void *src, size_t nbyte)
 {
@@ -29,65 +29,65 @@ static void	ft_memcpy(void *dest, const void *src, size_t nbyte)
 	}
 }
 
-void	*darray_reserve(t_darray *arr, size_t new_capacity)
+void	*vector_reserve(t_vector *vec, size_t new_capacity)
 {
 	void	*new_data;
 
 	new_data = NULL;
-	if (arr->capacity < new_capacity)
+	if (vec->capacity < new_capacity)
 	{
 		new_data = new_data_malloc(new_capacity);
 		if (new_data != NULL)
 		{
-			ft_memcpy(new_data, arr->data, (arr->size * sizeof(size_t)));
-			free(arr->data);
-			arr->data = new_data;
-			arr->capacity = new_capacity;
+			ft_memcpy(new_data, vec->data, (vec->size * sizeof(size_t)));
+			free(vec->data);
+			vec->data = new_data;
+			vec->capacity = new_capacity;
 		}
 	}
 	return ((void *)(new_data));
 }
 
-void	*darray_shrink_to_fit(t_darray *arr)
+void	*vector_shrink_to_fit(t_vector *vec)
 {
 	void	*shrinked_data;
 
 	shrinked_data = NULL;
-	if (arr->size < arr->capacity)
+	if (vec->size < vec->capacity)
 	{
-		shrinked_data = new_data_malloc(arr->size);
+		shrinked_data = new_data_malloc(vec->size);
 		if (shrinked_data != NULL)
 		{
-			ft_memcpy(shrinked_data, arr->data, (arr->size * sizeof(size_t)));
-			free(arr->data);
-			arr->data = shrinked_data;
-			arr->capacity = arr->size;
+			ft_memcpy(shrinked_data, vec->data, (vec->size * sizeof(size_t)));
+			free(vec->data);
+			vec->data = shrinked_data;
+			vec->capacity = vec->size;
 		}
 	}
 	return (shrinked_data);
 }
 
-void	darray_push_back(t_darray *arr, void *data_in)
+void	vector_push_back(t_vector *vec, void *data_in)
 {
 	void	*status;
 
-	if (arr == NULL || data_in == NULL)
+	if (vec == NULL || data_in == NULL)
 		return ;
-	if (arr->size >= arr->capacity)
+	if (vec->size >= vec->capacity)
 	{
-		status = darray_reserve(arr, arr->capacity * 2);
+		status = vector_reserve(vec, vec->capacity * 2);
 		if (status == NULL)
 			return ;
 	}
-	darray_set_data(arr, arr->size, data_in);
-	(arr->size)++;
+	vector_set_data(vec, vec->size, data_in);
+	(vec->size)++;
 }
 
-void	darray_pop_back(t_darray *arr)
+void	vector_pop_back(t_vector *vec)
 {
-	if (arr->size > 0)
+	if (vec->size > 0)
 	{
-		darray_set_data(arr, arr->size - 1, NULL);
-		(arr->size)--;
+		vector_set_data(vec, vec->size - 1, NULL);
+		(vec->size)--;
 	}
 }

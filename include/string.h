@@ -6,14 +6,14 @@
 /*   By: minkyeki <minkyeki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 12:26:31 by minkyeki          #+#    #+#             */
-/*   Updated: 2022/08/02 14:46:39 by minkyeki         ###   ########.fr       */
+/*   Updated: 2022/08/16 22:18:09 by minkyeki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRING_H
 # define STRING_H
 
-# include "../../include/libft.h"
+# include "libft.h"
 
 # define SUCCESS	(0)
 # define ERROR		(1)
@@ -49,7 +49,7 @@ typedef struct s_string {
 /* ============================
  * @ Default Constructor.
  * NOTE: do not use malloc. 
- * NOTE: [ t_vector *vec = new_vector( "#capacity you want" ) ];
+ * NOTE: [ t_string *str = new_string( "#capacity you want" ) ];
  *       --> returns NULL on error. */
 t_string	*new_string(size_t init_capacity);
 

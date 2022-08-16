@@ -1,64 +1,64 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   darray_iterate.c                                   :+:      :+:    :+:   */
+/*   vector_iterate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minkyeki <minkyeki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 16:46:20 by minkyeki          #+#    #+#             */
-/*   Updated: 2022/07/10 18:19:21 by minkyeki         ###   ########.fr       */
+/*   Updated: 2022/08/16 22:49:33 by minkyeki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "darray.h"
+#include "vector.h"
 
-void	darray_iterate(t_darray *arr, void (*f)(void *))
+void	vector_iterate(t_vector *vec, void (*f)(void *))
 {
 	size_t	i;
 
 	i = 0;
-	while (i < arr->size)
+	while (i < vec->size)
 	{
-		f(arr->data[i]);
+		f(vec->data[i]);
 		i++;
 	}
 }
 
-t_darray	*darray_map_malloc(t_darray *arr, void *(*f)(void *))
+t_vector	*vector_map_malloc(t_vector *vec, void *(*f)(void *))
 {
 	size_t		i;
-	t_darray	*new_arr;
+	t_vector	*new_vec;
 
-	new_arr = new_darray_malloc(arr->size);
-	if (new_arr != NULL)
+	new_vec = new_vector(vec->size);
+	if (new_vec != NULL)
 	{
 		i = 0;
-		while (i < arr->size)
+		while (i < vec->size)
 		{
-			darray_push_back(new_arr, f(arr->data[i]));
+			vector_push_back(new_vec, f(vec->data[i]));
 			i++;
 		}
 	}
-	return (new_arr);
+	return (new_vec);
 }
 
-int	darray_is_empty(t_darray *arr)
+int	vector_is_empty(t_vector *vec)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < arr->size)
+	while (i < vec->size)
 	{
-		if (arr->data[i] != NULL)
+		if (vec->data[i] != NULL)
 			return (0);
 		++i;
 	}
 	return (1);
 }
 
-void	*darray_get_last(t_darray *arr)
+void	*vector_get_last(t_vector *vec)
 {
-	if (arr->size == 0)
+	if (vec->size == 0)
 		return (NULL);
-	return (arr->data[arr->size - 1]);
+	return (vec->data[vec->size - 1]);
 }

@@ -1,66 +1,67 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   darray_create.c                                    :+:      :+:    :+:   */
+/*   vector_create.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minkyeki <minkyeki@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 16:18:56 by minkyeki          #+#    #+#             */
-/*   Updated: 2022/07/10 18:22:52 by minkyeki         ###   ########.fr       */
+/*   Updated: 2022/08/16 22:48:53 by minkyeki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "darray.h"
+#include "vector.h"
 
 extern void		*ft_calloc(size_t nmemb, size_t bytes);
 
-t_darray	*new_darray_malloc(size_t init_capacity)
+t_vector	*new_vector(size_t init_capacity)
 {
-	t_darray	*arr;
+	t_vector	*vec;
 
-	arr = malloc(sizeof(*arr));
-	if (arr != NULL)
+	vec = malloc(sizeof(*vec));
+	if (vec != NULL)
 	{
-		arr->size = 0;
-		arr->capacity = init_capacity;
-		arr->data = new_data_malloc(init_capacity);
-		if (arr->data == NULL)
+		vec->size = 0;
+		vec->capacity = init_capacity;
+		vec->data = new_data_malloc(init_capacity);
+		if (vec->data == NULL)
 		{
-			free(arr);
-			arr = NULL;
+			free(vec);
+			vec = NULL;
 		}
 	}
-	return (arr);
+	set_vector_func_ptr(vec);
+	return (vec);
 }
 
-void	delete_darray(t_darray **arr)
+void	delete_vector(t_vector **vec)
 {
-	darray_reset(*arr);
-	free((*arr)->data);
-	(*arr)->data = NULL;
-	free(*arr);
-	*arr = NULL;
+	vector_reset(*vec);
+	free((*vec)->data);
+	(*vec)->data = NULL;
+	free(*vec);
+	*vec = NULL;
 }
 
-void	darray_reset(t_darray *arr)
+void	vector_reset(t_vector *vec)
 {
 	size_t	idx;
 
 	idx = 0;
-	while (idx < arr->size)
+	while (idx < vec->size)
 	{
-		darray_set_data(arr, idx, NULL);
+		vector_set_data(vec, idx, NULL);
 		++idx;
 	}
-	arr->size = 0;
+	vec->size = 0;
 }
 
-void	darray_set_data(t_darray *arr, size_t index, void *data)
+void	vector_set_data(t_vector *vec, size_t index, void *data)
 {
-	if (arr->data[index] != NULL)
-		free(arr->data[index]);
-	arr->data[index] = data;
+	if (vec->data[index] != NULL)
+		free(vec->data[index]);
+	vec->data[index] = data;
 }
 
 void	*new_data_malloc(size_t init_capacity)
