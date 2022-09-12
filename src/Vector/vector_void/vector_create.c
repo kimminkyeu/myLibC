@@ -6,21 +6,18 @@
 /*   By: minkyeki <minkyeki@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/24 16:18:56 by minkyeki          #+#    #+#             */
-/*   Updated: 2022/09/12 15:36:45 by minkyeki         ###   ########.fr       */
+/*   Updated: 2022/09/12 15:36:20 by minkyeki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "vector_GENERIC.h"
+#include "vector.h"
 
-extern void	ft_bzero(void *s, size_t n);
-extern void	*ft_calloc(size_t nmemb, size_t bytes);
-extern void	set_vector_GENERIC_func_ptr(t_vector_GENERIC *pa_vec);
-extern void	*new_GENERIC_data_malloc(size_t init_capacity);
+extern void		*ft_calloc(size_t nmemb, size_t bytes);
 
-t_vector_GENERIC	*new_vector_GENERIC(size_t init_capacity)
+t_vector	*new_vector(size_t init_capacity)
 {
-	t_vector_GENERIC	*vec;
+	t_vector	*vec;
 
 	if (init_capacity == 0)
 		return (NULL);
@@ -29,42 +26,50 @@ t_vector_GENERIC	*new_vector_GENERIC(size_t init_capacity)
 	{
 		vec->size = 0;
 		vec->capacity = init_capacity;
-		vec->data = new_GENERIC_data_malloc(init_capacity);
+		vec->data = new_data_malloc(init_capacity);
 		if (vec->data == NULL)
 		{
 			free(vec);
-			return (NULL);
+			vec = NULL;
 		}
 	}
-	set_vector_GENERIC_func_ptr(vec);
+	set_vector_func_ptr(vec);
 	return (vec);
 }
 
-void	delete_vector_GENERIC(t_vector_GENERIC **vec)
+void	delete_vector(t_vector **vec)
 {
-	vector_GENERIC_reset(*vec);
+	vector_reset(*vec);
 	free((*vec)->data);
 	(*vec)->data = NULL;
 	free(*vec);
 	*vec = NULL;
 }
 
-void	vector_GENERIC_reset(t_vector_GENERIC *vec)
+void	vector_reset(t_vector *vec)
 {
-	ft_bzero(vec->data, vec->size);
+	size_t	idx;
+
+	idx = 0;
+	while (idx < vec->size)
+	{
+		vector_set_data(vec, idx, NULL);
+		++idx;
+	}
 	vec->size = 0;
 }
 
-void	vector_GENERIC_set_data(t_vector_GENERIC *vec, size_t index, t_GENERIC data)
+void	vector_set_data(t_vector *vec, size_t index, void *data)
 {
-	if (vec->data != NULL)
-		vec->data[index] = data;
+	if (vec->data[index] != NULL)
+		free(vec->data[index]);
+	vec->data[index] = data;
 }
 
-void	*new_GENERIC_data_malloc(size_t init_capacity)
+void	*new_data_malloc(size_t init_capacity)
 {
 	void	*data;
 
-	data = ft_calloc(init_capacity, sizeof(t_GENERIC));
+	data = ft_calloc(init_capacity, sizeof(size_t));
 	return (data);
 }
